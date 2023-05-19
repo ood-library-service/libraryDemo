@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:text="${session.bookDetail.getIsbn()}"></div>
+    <div th:text="${session.bookDetail.getTitle()}"></div>
+    <div th:text="${session.bookDetail.getAuthor()}"></div>
+    <div th:text="${session.bookDetail.getDateOut()}"></div>
+    <div th:text="${session.bookDetail.getLoanUser()}"></div>
+    <div th:text="${session.bookDetail.getBookState()}"></div>
+
+</body>
+</html>
