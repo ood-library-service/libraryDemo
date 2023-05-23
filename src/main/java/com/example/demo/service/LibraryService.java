@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BookEntity;
+import com.example.demo.model.BookState;
 import com.example.demo.model.UserEntity;
 import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.UserRepository;
@@ -22,7 +23,7 @@ public class LibraryService {
     }
 
     // 대출
-    public BookEntity loanBook(final String userPk, final Long isbn){
+    public void loanBook(final String userPk, final Long isbn){
         final Optional<BookEntity> bookOriginal = bookRepository.findById(isbn); // Id 필요
         final Optional<UserEntity> userOriginal = userRepository.findById(userPk);
 
@@ -35,51 +36,54 @@ public class LibraryService {
         // 이 사람이 대출이 가능한 사람인가 ?
         ValidationService.userLoanAvailable(user.getBorrowedBooksCnt());
 
-        book.setLoanUser(userPk); // 대출한 사람을 책에다가 적어줌
-        book.setBookState("loaned");
+        book.setLoanUser(user.getUsername()); // 대출한 사람을 책에다가 적어줌
+        book.setBookState(BookState.BORROWED.getValue());
 
         LocalDate todayLocalDate = LocalDate.now();
         book.setDateOut(todayLocalDate.plusDays(14));
 
         bookRepository.save(book);
-
-        return retrieve(isbn);
     }
 
     // 반납
-    public BookEntity returnBook(final String userPk, final Long isbn){
+    public void returnBook(final String userPk, final Long isbn){
         final Optional<BookEntity> bookOriginal = bookRepository.findById(isbn);
+        final Optional<UserEntity> userOriginal = userRepository.findById(userPk);
 
         final BookEntity book = bookOriginal.get();
+        final UserEntity user = userOriginal.get();
 
         // 검증 요소
         // 책이 대출이 되어있는 상태인가 ?
         ValidationService.returnAvailable(book.getBookState());
         // 반납하려는 사람이 책을 빌린사람인가 ?
-        ValidationService.isPkEqual(userPk, book.getLoanUser());
+        ValidationService.isPkEqual(user.getUsername(), book.getLoanUser());
 
-        book.setLoanUser(null);
-        book.setBookState("available");
+        book.setDateOut(LocalDate.ofEpochDay(0));
+        book.setLoanUser("admin");
+        book.setBookState(BookState.AVAILABLE.getValue());
         bookRepository.save(book);
 
-        return retrieve(isbn);
+        retrieve(isbn);
     }
 
     // 연장
-    public BookEntity extendDue(final String userPk, final Long isbn){
+    public void extendDue(final String userPk, final Long isbn){
         final Optional<BookEntity> bookOriginal = bookRepository.findById(isbn);
+        final Optional<UserEntity> userOriginal = userRepository.findById(userPk);
 
         final BookEntity book = bookOriginal.get();
+        final UserEntity user = userOriginal.get();
 
         // 검증 요소
         // 책이 대출중인가 ?
         ValidationService.isLoaned(book.getBookState());
         // 연장하려는 사람이 책을 빌린사람인가 ?
-        ValidationService.isPkEqual(userPk, book.getLoanUser());
+        ValidationService.isPkEqual(user.getUsername(), book.getLoanUser());
 
-        book.setBookState("extended");
+        book.setBookState(BookState.EXTEND.getValue());
         book.setDateOut(book.getDateOut().plusDays(14));
-        return  retrieve(isbn);
+        retrieve(isbn);
     }
 
     // 책 검색하기

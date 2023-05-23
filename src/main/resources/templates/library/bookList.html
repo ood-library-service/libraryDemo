@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <a th:href="@{/library/bookDetail(isbn=${session.bookList[0].getIsbn()})}" th:text ="${session.bookList[0].getIsbn()}"></a>
+    <tr th:each="book : ${session.bookList}">
+        <td>
+            <a th:href="@{/library/bookDetail(isbn=${book.isbn})}" th:text ="${book.title}"></a>
+            <br>
+        </td>
+    </tr>
 </body>
 </html>

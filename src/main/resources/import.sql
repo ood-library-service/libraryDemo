@@ -57,7 +57,7 @@ insert into book (title, author, dateout, loanuser, bookstate) values ('Bonsái'
 insert into book (title, author, dateout, loanuser, bookstate) values ('Blood and Wine (Blood & Wine)', 'Barbey','0001-01-01', 'admin', 'available');
 insert into book (title, author, dateout, loanuser, bookstate) values ('Goldfish Memory', 'Tucky','0001-01-01', 'admin', 'available');
 insert into book (title, author, dateout, loanuser, bookstate) values ('High School Musical', 'Phyllys','0001-01-01', 'admin', 'available');
-insert into book (title, author, dateout, loanuser, bookstate) values ('I Was Monty''s Double', 'Olwen','0001-01-01', 'admin', 'available');
+insert into book (title, author, dateout, loanuser, bookstate) values ('I Was Monty`s Double', 'Olwen','0001-01-01', 'admin', 'available');
 insert into book (title, author, dateout, loanuser, bookstate) values ('Hamlet', 'Stormy','0001-01-01', 'admin', 'available');
 insert into book (title, author, dateout, loanuser, bookstate) values ('Casa de los babys', 'Ursulina','0001-01-01', 'admin', 'available');
 insert into book (title, author, dateout, loanuser, bookstate) values ('Mysteries of Pittsburgh, The', 'Brittney','0001-01-01', 'admin', 'available');

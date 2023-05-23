@@ -5,12 +5,58 @@
     <title>Title</title>
 </head>
 <body>
-    <div th:text="${session.bookDetail.getIsbn()}"></div>
-    <div th:text="${session.bookDetail.getTitle()}"></div>
-    <div th:text="${session.bookDetail.getAuthor()}"></div>
-    <div th:text="${session.bookDetail.getDateOut()}"></div>
-    <div th:text="${session.bookDetail.getLoanUser()}"></div>
-    <div th:text="${session.bookDetail.getBookState()}"></div>
+    <div>
+        <span>isbn</span>
+        <span th:text="${session.bookDetail.getIsbn()}"></span>
 
+    </div>
+    <div>
+        <span>title</span>
+        <span th:text="${session.bookDetail.getTitle()}"></span>
+    </div>
+    <div>
+        <span>author</span>
+        <span th:text="${session.bookDetail.getAuthor()}"></span>
+    </div>
+    <div >
+        <th:block th:if="${session.bookDetail.getBookState() != 'available'}">
+            <span >반납예정일</span>
+            <span th:text="${session.bookDetail.getDateOut()}"></span>
+        </th:block>
+
+    </div>
+    <div>
+        <span>빌린사람</span>
+        <span th:text="${session.bookDetail.getLoanUser()}"></span>
+    </div>
+    <div>
+        <span>상태</span>
+        <span th:text="${session.bookDetail.getBookState()}"></span>
+    </div>
+
+    <div>
+        <form action="/library/loanBook" method="post">
+            <input type="hidden" name ="isbn" th:value= "${session.bookDetail.getIsbn()}">
+            <button th:if="${session.bookDetail.getBookState() == 'available'}" type="submit" >대출하기</button>
+        </form>
+
+        <form action="/library/extendBook" method="post">
+            <input type="hidden" name ="isbn" th:value= "${session.bookDetail.getIsbn()}">
+            <button th:if="${session.bookDetail.getBookState() == 'borrowed' && session.bookDetail.getLoanUser() == session.username}" >
+                연장하기
+            </button>
+        </form>
+
+        <form action="/library/returnBook" method="post">
+            <input type="hidden" name ="isbn" th:value= "${session.bookDetail.getIsbn()}">
+            <button
+                    th:if="${(session.bookDetail.getBookState() == 'borrowed'
+            || session.bookDetail.getBookState() == 'extend')
+            && session.bookDetail.getLoanUser() == session.username}" >
+                반납하기
+            </button>
+        </form>
+
+    </div>
 </body>
 </html>

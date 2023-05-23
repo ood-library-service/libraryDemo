@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BookState {
-    AVAILABLE("AVAILABLE"),
-    BORROWED("BORROWED"),
-    EXTEND("EXTEND"),
-    OVERDUE("OVERDUE");
+    AVAILABLE("available"),
+    BORROWED("borrowed"),
+    EXTEND("extend"),
+    OVERDUE("overdue");
 
     private final String value;
 }

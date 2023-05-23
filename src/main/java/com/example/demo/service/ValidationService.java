@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.BookState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,9 @@ public class ValidationService {
     public static void isAvailable(final String state){ // 대출 가능한 상태인가
         if (Objects.equals(state, "available")){
             log.warn("대출 가능 상태입니다.");
+            return;
         }
-        else if (Objects.equals(state, "loaned")){
+        else if (Objects.equals(state, "borrowed")){
             log.warn("이미 대출 중 입니다.");
             throw new RuntimeException("이미 대출 중 입니다.");
         }
@@ -29,8 +31,9 @@ public class ValidationService {
     }
 
     public static void isLoaned(final String state){
-        if (Objects.equals(state, "loaned")){
+        if (Objects.equals(state, "borrowed")){
             log.warn("연장 가능 상태입니다.");
+            return;
         }else if(Objects.equals(state, "available")){
             log.warn("대출 가능 상태입니다.");
             throw new RuntimeException("대출 가능 상태입니다.");
@@ -45,8 +48,9 @@ public class ValidationService {
     }
 
     public static void returnAvailable(final String state){
-        if(Objects.equals(state, "loaned") || Objects.equals(state,"extended")){
+        if(Objects.equals(state, "borrowed") || Objects.equals(state,"extended")){
             log.warn("반납 가능 상태입니다.");
+            return;
         }else if(Objects.equals(state, "available")){
             log.warn("대출 가능 상태입니다.");
             throw new RuntimeException("대출가능 상태입니다.");
@@ -69,10 +73,10 @@ public class ValidationService {
 
     public static void isPkEqual(final String userPk, final String loanUser){
         if(!Objects.equals(userPk, loanUser)){
-            log.warn("불잂치 합니다.");
-            throw new RuntimeException("불잂치 합니다.");
+            log.warn("불일치 합니다.");
+            throw new RuntimeException("불일치 합니다.");
         }
-        log.warn("잏치 합니다.");
+        log.warn("일치 합니다.");
     }
 
 }
