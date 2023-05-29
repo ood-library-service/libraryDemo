@@ -2,18 +2,22 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Bookservice</title>
+    <link th:href="@{css/index.css}" rel="stylesheet" />
 </head>
 <body>
+    <div class="headwrapper">
+        <div class="loginwrapper">
+            <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+        </div>
+        <div class = "titlewrapper"><h1 sec:authorize="isAuthenticated()"> 반갑습니다!
+            <span sec:authentication="name"> 님 </span><span>님</span></h1>
+        </div>
+    </div>
 
-    <h3 sec:authorize="isAuthenticated()"> 반갑습니다. <span sec:authentication="name">님!!</span></h3>
-
-    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
-
-    <div th:text="${session.test}"></div>
-
+<!--    <div th:text="${session.test}"></div>-->
     <form action="/library/bookList" method="get">
         <input type="text" name="keyWord">
         <input type="submit" value="submit">

@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>signup</title>
+    <link th:href="@{/css/signup.css}" rel="stylesheet" />
 </head>
 <body>
+<div class="center-form">
 <h1>회원가입</h1>
-
     <form action="/auth/signup" method="post">
-        <input type="text" name="username" placeholder="아이디">
-        <input type="password" name="password" placeholder="비밀번호">
-        <input type="password" name="passwordCheck" placeholder="비밀번호 확인">
-        <button type="submit">회원가입</button>
+        <input type="text" name="username" placeholder="아이디" class="text-field">
+        <input type="password" name="password" placeholder="비밀번호" class="text-field">
+        <input type="password" name="passwordCheck" placeholder="비밀번호 확인" class="text-field">
+        <button type="submit" class="submit-btn">회원가입</button>
     </form>
-
+</div>
 </body>
 </html>

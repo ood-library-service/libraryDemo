@@ -2,16 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>login</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+<!--    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">-->
 </head>
 <body>
+<div class="center-form">
   <h1>로그인</h1>
-
   <form class="form-login" method="post" action="/loginProcess">
-    <input type="text" name="username" placeholder="아이디">
-    <input type="password" name="password" placeholder="비밀번호">
-    <button type="submit">로그인</button>
+    <input type="text" name="username" placeholder="아이디" class="text-field">
+    <input type="password" name="password" placeholder="비밀번호" class="text-field">
+    <button type="submit" class="submit-btn">로그인</button>
   </form>
+    <h6>회원가입을 하셨나요?</h6><a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+  </div>
 
 </body>
 </html>
